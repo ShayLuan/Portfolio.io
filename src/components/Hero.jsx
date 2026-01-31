@@ -127,7 +127,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
-              Hi, I'm Shay Luan
+              Hi, I'm <span style={{ fontFamily: 'Neonderthaw, cursive' }}>Shay Luan</span>
             </motion.h1>
           </div>
           <motion.p
