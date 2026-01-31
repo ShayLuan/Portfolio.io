@@ -31,7 +31,7 @@ export default function Connect() {
                 </div>
                 <div>
                   <h3 className="font-bold text-lg text-gray-100">Email</h3>
-                  <p className="text-gray-300">luan.yq.shay@gmail.com</p>
+                  <p className="text-gray-300">l****y@gmail.com</p>
                 </div>
               </motion.a>
               
