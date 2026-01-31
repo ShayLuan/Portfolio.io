@@ -2,6 +2,8 @@
 
 My personal portfolio built with React, Tailwind CSS, and Framer Motion.
 
+Disclaimer: README file written completely by LLM.
+
 ## Project Structure
 
 ```
