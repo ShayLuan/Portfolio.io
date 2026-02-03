@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
+import { getTranslation } from '../translations';
 
 export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, closeMenu }) {
-  const [currentLanguage, setCurrentLanguage] = useState('EN');
+  const { language, setLanguage } = useLanguage();
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  const t = (key) => getTranslation(language, key);
 
   const languages = [
     { code: 'EN', flag: 'https://flagcdn.com/w20/ca.png', name: 'English' }, // Canada
@@ -11,7 +14,9 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
     { code: 'ZH', flag: 'https://flagcdn.com/w20/cn.png', name: 'Mandarin' } // China
   ];
 
-  const currentLang = languages.find(lang => lang.code === currentLanguage) || languages[0];
+  const currentLang = languages.find(lang => lang.code === language) || languages[0];
+  
+  const navItems = ['About', 'Projects', 'Skills', 'Connect'];
   return (
     <nav className="fixed w-full bg-gray-900/90 backdrop-blur-sm z-50 shadow-sm border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -40,7 +45,7 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-10">
-            {['About', 'Projects', 'Skills', 'Connect'].map((item) => (
+            {navItems.map((item) => (
               <motion.a
                 key={item}
                 href={`#${item.toLowerCase()}`}
@@ -53,7 +58,7 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {item}
+                {t(`nav.${item.toLowerCase()}`)}
               </motion.a>
             ))}
             <span className="text-gray-600 mx-2">|</span>
@@ -94,11 +99,11 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
                       <motion.button
                         key={lang.code}
                         onClick={() => {
-                          setCurrentLanguage(lang.code);
+                          setLanguage(lang.code);
                           setIsLanguageMenuOpen(false);
                         }}
                         className={`w-full px-4 py-2 text-left flex items-center space-x-2 transition-colors ${
-                          currentLanguage === lang.code
+                          language === lang.code
                             ? 'bg-emerald-900/50 text-emerald-400'
                             : 'text-gray-300 hover:bg-gray-700'
                         }`}
@@ -110,7 +115,7 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
                           className="w-5 h-4 object-cover rounded-sm"
                         />
                         <span>{lang.code}</span>
-                        {currentLanguage === lang.code && (
+                        {language === lang.code && (
                           <span className="ml-auto text-emerald-400">✓</span>
                         )}
                       </motion.button>
@@ -158,7 +163,7 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
           className="md:hidden bg-gray-900 border-t border-gray-800"
         >
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {['About', 'Projects', 'Skills', 'Connect'].map((item) => (
+            {navItems.map((item) => (
               <motion.a
                 key={item}
                 href={`#${item.toLowerCase()}`}
@@ -170,7 +175,7 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
                 }`}
                 whileTap={{ scale: 0.98 }}
               >
-                {item}
+                {t(`nav.${item.toLowerCase()}`)}
               </motion.a>
             ))}
             <div className="border-t border-gray-700 mt-2 pt-2">
@@ -179,11 +184,11 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
                 <motion.button
                   key={lang.code}
                   onClick={() => {
-                    setCurrentLanguage(lang.code);
+                    setLanguage(lang.code);
                     setIsLanguageMenuOpen(false);
                   }}
                   className={`w-full px-3 py-2 rounded-md text-base font-medium transition-colors flex items-center space-x-2 ${
-                    currentLanguage === lang.code
+                    language === lang.code
                       ? 'bg-emerald-900/50 text-emerald-400'
                       : 'text-gray-300 hover:bg-gray-800'
                   }`}
@@ -195,7 +200,7 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
                     className="w-5 h-4 object-cover rounded-sm"
                   />
                   <span>{lang.code}</span>
-                  {currentLanguage === lang.code && (
+                  {language === lang.code && (
                     <span className="ml-auto text-emerald-400">✓</span>
                   )}
                 </motion.button>

@@ -7,6 +7,12 @@
   font-family: 'Ubuntu', sans-serif;
 }
 
+/* Chinese font for Mandarin */
+html[data-lang="ZH"] *,
+html[data-lang="ZH"] {
+  font-family: 'ZCOOL XiaoWei', 'Ubuntu', sans-serif;
+}
+
 /* Animation delay utilities */
 .animation-delay-2000 {
   animation-delay: 2s;

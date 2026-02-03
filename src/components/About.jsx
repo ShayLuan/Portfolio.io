@@ -1,7 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
+import { getTranslation } from '../translations';
 
 export default function About() {
+  const { language } = useLanguage();
+  const t = (key) => getTranslation(language, key);
   return (
     <section id="about" className="py-20 bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,20 +17,20 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="space-y-6"
           >
-            <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-400" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>About Me</h2>
+            <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-400" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('about.title')}</h2>
             <p className="text-lg text-gray-300 leading-relaxed">
-              I'm a second year Computer Science student at Concordia University with a passion for building practical applications. They can be web-based, embedded, or automated... basically anything that can be done with a computer, as long as they serve a purpose.
+              {t('about.paragraph1')}
             </p>
             <p className="text-lg text-gray-300 leading-relaxed">
-              When I'm not coding, you can find me cooking up delicious meals (let's be honest, it's just the organic version of coding), participating in hackathons, or exploring new technologies. I'm also an avid reader, and let's not forget the most dominant hobby of the century: gaming!
+              {t('about.paragraph2')}
             </p>
             <p className="text-lg text-gray-300 leading-relaxed">
-              I'm currently focusing on backend development with C++ and expanding my frontend knowledge with React.
+              {t('about.paragraph3')}
             </p>
             <div className="flex flex-wrap gap-4 mt-6">
-              <span className="px-4 py-2 bg-emerald-900/50 text-emerald-300 rounded-full font-medium">CS Student</span>
-              <span className="px-4 py-2 bg-teal-900/50 text-teal-300 rounded-full font-medium">Bare-metal Enthusiast</span>
-              <span className="px-4 py-2 bg-green-900/50 text-green-300 rounded-full font-medium">Open source lover</span>
+              <span className="px-4 py-2 bg-emerald-900/50 text-emerald-300 rounded-full font-medium">{t('about.badges.csStudent')}</span>
+              <span className="px-4 py-2 bg-teal-900/50 text-teal-300 rounded-full font-medium">{t('about.badges.bareMetal')}</span>
+              <span className="px-4 py-2 bg-green-900/50 text-green-300 rounded-full font-medium">{t('about.badges.openSource')}</span>
             </div>
           </motion.div>
           
@@ -55,13 +59,13 @@ export default function About() {
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 flex flex-col items-center justify-center text-white font-bold text-sm leading-none gap-0.5">
-                      <span>2nd</span>
-                      <span>Year</span>
+                      <span>{t('about.year')}</span>
+                      <span>{t('about.yearLabel')}</span>
                     </div>
                   </div>
                   <div className="ml-3">
-                    <h3 className="font-bold text-lg text-gray-100">Computer Science</h3>
-                    <p className="text-gray-400 text-sm mt-1">Concordia University</p>
+                    <h3 className="font-bold text-lg text-gray-100">{t('about.degree')}</h3>
+                    <p className="text-gray-400 text-sm mt-1">{t('about.university')}</p>
                   </div>
                 </div>
               </div>

@@ -1,7 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
+import { getTranslation } from '../translations';
 
 export default function Hero() {
+  const { language } = useLanguage();
+  const t = (key) => getTranslation(language, key);
   return (
     <section id="hero" className="pt-32 pb-20 md:pt-40 md:pb-32 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
       {/* Animated background pattern */}
@@ -127,7 +131,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
-              Hi, I'm <span style={{ fontFamily: 'Neonderthaw, cursive' }}>Shay Luan</span>
+              {t('hero.greeting')} <span style={{ fontFamily: 'Neonderthaw, cursive' }}>{t('hero.name')}</span>
             </motion.h1>
           </div>
           <motion.p
@@ -136,7 +140,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
-            Second-year Computer Science student passionate about building practical web applications
+            {t('hero.description')}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -150,7 +154,7 @@ export default function Hero() {
               whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)" }}
               whileTap={{ scale: 0.95 }}
             >
-              View My Projects
+              {t('hero.viewProjects')}
             </motion.a>
             <motion.a
               href="#connect"
@@ -158,7 +162,7 @@ export default function Hero() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Connect With Me
+              {t('hero.connect')}
             </motion.a>
           </motion.div>
         </motion.div>

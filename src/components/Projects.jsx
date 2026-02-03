@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { projects } from '../data/projects';
+import { useLanguage } from '../context/LanguageContext';
+import { getTranslation } from '../translations';
 
 export default function Projects() {
+  const { language } = useLanguage();
+  const t = (key) => getTranslation(language, key);
   const [hoveredId, setHoveredId] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -31,9 +35,9 @@ export default function Projects() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-400" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>My Projects</h2>
+          <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-400" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('projects.title')}</h2>
           <p className="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
-            Here are some of my recent projects hosted on GitHub. I focus on building practical applications that solve real problems or have a personal use.
+            {t('projects.description')}
           </p>
         </motion.div>
         
@@ -108,7 +112,7 @@ export default function Projects() {
                       className="inline-flex items-center text-emerald-400 font-medium hover:text-emerald-300 transition-colors"
                       whileHover={{ x: 5 }}
                     >
-                      <span className="mr-2">🐙</span> View on GitHub
+                      <span className="mr-2">🐙</span> {t('projects.viewOnGitHub')}
                     </motion.a>
                   </div>
                 </motion.div>
@@ -144,7 +148,7 @@ export default function Projects() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            View All GitHub Projects
+            {t('projects.viewAll')}
           </motion.a>
         </motion.div>
       </div>

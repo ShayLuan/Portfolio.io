@@ -2,9 +2,37 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { skills } from '../data/skills';
 import { interests } from '../data/interests';
+import { useLanguage } from '../context/LanguageContext';
+import { getTranslation } from '../translations';
 
 export default function Skills() {
+  const { language } = useLanguage();
+  const t = (key) => getTranslation(language, key);
   const [activeTab, setActiveTab] = useState('technical');
+
+  // Map interest names to translation keys
+  const getInterestTranslationKey = (name) => {
+    const mapping = {
+      "Backend Development": "interests.backendDevelopment",
+      "System Design": "interests.systemDesign",
+      "Database Optimization": "interests.databaseOptimization",
+      "API Development": "interests.apiDevelopment",
+      "Performance Tuning": "interests.performanceTuning",
+      "Cloud Architecture": "interests.cloudArchitecture",
+      "Game/Game Engine Development": "interests.gameGameEngineDevelopment",
+      "Bare-metal/Embedded Development": "interests.bareMetalEmbeddedDevelopment",
+      "Healthcare Research": "interests.healthcareResearch",
+      "AI/ML/LLM Development": "interests.aiMlLlmDevelopment"
+    };
+    return mapping[name] || name;
+  };
+
+  const getItemName = (item) => {
+    if (activeTab === 'interests') {
+      return t(getInterestTranslationKey(item.name));
+    }
+    return item.name;
+  };
 
   const currentData = activeTab === 'technical' ? skills : interests;
   const barColor = activeTab === 'technical' 
@@ -21,7 +49,7 @@ export default function Skills() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-400" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Skills & Interests</h2>
+          <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-400" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('skills.title')}</h2>
           
           {/* Tabs */}
           <div className="flex justify-center gap-4 mt-8">
@@ -35,7 +63,7 @@ export default function Skills() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Technical Skills
+              {t('skills.technicalTab')}
             </motion.button>
             <motion.button
               onClick={() => setActiveTab('interests')}
@@ -47,14 +75,14 @@ export default function Skills() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Interests
+              {t('skills.interestsTab')}
             </motion.button>
           </div>
 
           <p className="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
             {activeTab === 'technical' 
-              ? "Technologies I'm currently learning and using in my projects"
-              : "Areas I'm passionate about and love working with"}
+              ? t('skills.technicalDescription')
+              : t('skills.interestsDescription')}
           </p>
         </motion.div>
         
@@ -75,7 +103,7 @@ export default function Skills() {
               className="space-y-2"
             >
               <div className="flex justify-between text-sm font-medium text-gray-200">
-                <span>{item.name}</span>
+                <span>{getItemName(item)}</span>
                 <span>{item.level}%</span>
               </div>
               <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
@@ -104,8 +132,8 @@ export default function Skills() {
             }`}
           >
             {activeTab === 'technical'
-              ? "Continuously learning and expanding my skill set"
-              : "Passionate about building impactful solutions"}
+              ? t('skills.technicalFooter')
+              : t('skills.interestsFooter')}
           </motion.div>
         </div>
       </div>

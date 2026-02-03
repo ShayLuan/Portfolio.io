@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -8,6 +9,33 @@ import CommunicationLanguages from './components/CommunicationLanguages';
 import Connect from './components/Connect';
 import Footer from './components/Footer';
 import './index.css';
+
+function AppContent({ isMenuOpen, setIsMenuOpen, activeSection, setActiveSection, closeMenu }) {
+  const { language } = useLanguage();
+  
+  // Update HTML data attribute for font styling
+  useEffect(() => {
+    document.documentElement.setAttribute('data-lang', language);
+  }, [language]);
+
+  return (
+    <div className="text-gray-100 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
+      <Navigation 
+        isMenuOpen={isMenuOpen}
+        setIsMenuOpen={setIsMenuOpen}
+        activeSection={activeSection}
+        closeMenu={closeMenu}
+      />
+      <Hero />
+      <About />
+      <Projects />
+      <Skills />
+      <CommunicationLanguages />
+      <Connect />
+      <Footer />
+    </div>
+  );
+}
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,21 +65,15 @@ export default function App() {
   }, []);
 
   return (
-    <div className="text-gray-100 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
-      <Navigation 
+    <LanguageProvider>
+      <AppContent 
         isMenuOpen={isMenuOpen}
         setIsMenuOpen={setIsMenuOpen}
         activeSection={activeSection}
+        setActiveSection={setActiveSection}
         closeMenu={closeMenu}
       />
-      <Hero />
-      <About />
-      <Projects />
-      <Skills />
-      <CommunicationLanguages />
-      <Connect />
-      <Footer />
-    </div>
+    </LanguageProvider>
   );
 }
 

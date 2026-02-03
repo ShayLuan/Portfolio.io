@@ -1,7 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
+import { getTranslation } from '../translations';
 
 export default function Connect() {
+  const { language } = useLanguage();
+  const t = (key) => getTranslation(language, key);
   return (
     <section id="connect" className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,9 +18,9 @@ export default function Connect() {
             className="space-y-8"
           >
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-400" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Let's Connect</h2>
+              <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-400" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('connect.title')}</h2>
               <p className="mt-4 text-xl text-gray-300">
-                I'm always excited to collaborate on interesting projects or discuss new technologies. Feel free to reach out!
+                {t('connect.description')}
               </p>
             </div>
             
@@ -30,7 +34,7 @@ export default function Connect() {
                   ✉️
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg text-gray-100">Email</h3>
+                  <h3 className="font-bold text-lg text-gray-100">{t('connect.email')}</h3>
                   <p className="text-gray-300">l****y@gmail.com</p>
                 </div>
               </motion.a>
@@ -44,7 +48,7 @@ export default function Connect() {
                   whileHover={{ y: -5 }}
                 >
                   <span className="text-2xl">🐙</span>
-                  <span className="font-medium text-lg">GitHub Profile</span>
+                  <span className="font-medium text-lg">{t('connect.githubProfile')}</span>
                 </motion.a>
                 
                 <motion.a 
@@ -55,13 +59,13 @@ export default function Connect() {
                   whileHover={{ y: -5 }}
                 >
                   <span className="text-2xl">🔗</span>
-                  <span className="font-medium text-lg">LinkedIn</span>
+                  <span className="font-medium text-lg">{t('connect.linkedin')}</span>
                 </motion.a>
               </div>
             </div>
             
             <p className="text-gray-300 mt-4">
-              I'm currently open to internship opportunities for{' '}
+              {t('connect.internship')}{' '}
               <span className="relative inline-block">
                 <motion.strong
                   initial={{ opacity: 0, scale: 0.5, x: -50, backgroundPosition: '200% 50%' }}
@@ -91,7 +95,7 @@ export default function Connect() {
                     WebkitTextFillColor: 'transparent'
                   }}
                 >
-                  Summer/Fall 2026
+                  {t('connect.internshipPeriod')}
                 </motion.strong>
                 {/* Sparkle particles */}
                 {[...Array(6)].map((_, i) => {
@@ -156,7 +160,7 @@ export default function Connect() {
                   }}
                 />
               </span>
-              {' '}and collaborative projects!
+              {' '}{t('connect.andCollaborative')}
             </p>
           </motion.div>
         </div>
