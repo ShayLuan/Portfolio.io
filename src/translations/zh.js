@@ -1,5 +1,6 @@
 export const zh = {
   nav: {
+    forGeeks: '给 Geeks',
     about: '关于',
     projects: '项目',
     skills: '技能',

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { getTranslation } from '../translations';
 
 export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, closeMenu }) {
   const { language, setLanguage } = useLanguage();
+  const pathname = useLocation().pathname;
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const t = (key) => getTranslation(language, key);
 
@@ -16,23 +18,23 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
 
   const currentLang = languages.find(lang => lang.code === language) || languages[0];
   
-  const navItems = ['About', 'Projects', 'Skills', 'Connect'];
+  const navItems = ['For Geeks', 'About', 'Projects', 'Skills', 'Connect'];
   return (
     <nav className="fixed w-full bg-gray-900/90 backdrop-blur-sm z-50 shadow-sm border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="flex items-center space-x-2"
-          >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-xl">
+          <Link to="/" className="flex items-center space-x-2">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="w-10 h-10 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-xl"
+            >
               SL
-            </div>
-            <span 
+            </motion.div>
+            <span
               className="font-bold text-xl"
-              style={{ 
+              style={{
                 WebkitTextStroke: '1px rgba(16, 185, 129, 0.8)',
                 textStroke: '1px rgba(16, 185, 129, 0.8)',
                 WebkitTextFillColor: 'transparent',
@@ -41,26 +43,92 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
             >
               Portfolio
             </span>
-          </motion.div>
+          </Link>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-10">
-            {navItems.map((item) => (
-              <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                onClick={closeMenu}
-                className={`font-medium transition-all duration-300 ${
-                  activeSection === item.toLowerCase() 
-                    ? 'text-emerald-400 font-bold' 
-                    : 'text-gray-300 hover:text-emerald-400'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {t(`nav.${item.toLowerCase()}`)}
-              </motion.a>
-            ))}
+            {navItems.map((item) => {
+              const isForGeeks = item === 'For Geeks';
+              const slug = isForGeeks ? 'forgeeks' : item.toLowerCase();
+              const isForGeeksActive = pathname === '/forgeeks';
+              const isSectionActive = pathname === '/' && activeSection === slug;
+              if (isForGeeks) {
+                return (
+                  <Link
+                    key={item}
+                    to="/forgeeks"
+                    onClick={closeMenu}
+                    className="font-medium transition-all duration-300 relative inline-block"
+                  >
+                    <motion.span
+                      className="relative inline-block"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <motion.span
+                        className="relative inline-block bg-clip-text text-transparent bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 bg-[length:200%_auto]"
+                        style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+                        animate={{ backgroundPosition: ['200% 50%', '-100% 50%'] }}
+                        transition={{ backgroundPosition: { duration: 2.5, repeat: Infinity, ease: 'linear' } }}
+                      >
+                        {t('nav.forGeeks')}
+                      </motion.span>
+                      {[...Array(4)].map((_, i) => (
+                        <motion.span
+                          key={i}
+                          className="absolute text-orange-300 pointer-events-none z-10"
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{
+                            opacity: [0, 1, 1, 0],
+                            scale: [0, 1.2, 0.8, 0],
+                            rotate: [0, 180, 360]
+                          }}
+                          transition={{
+                            duration: 2.5,
+                            repeat: Infinity,
+                            delay: i * 0.3,
+                            ease: "easeInOut"
+                          }}
+                          style={{
+                            left: `${15 + i * 25}%`,
+                            top: '-8px',
+                            fontSize: '0.5em'
+                          }}
+                        >
+                          ✨
+                        </motion.span>
+                      ))}
+                    </motion.span>
+                  </Link>
+                );
+              }
+              if (pathname === '/forgeeks') {
+                return (
+                  <Link
+                    key={item}
+                    to="/"
+                    onClick={closeMenu}
+                    className="font-medium transition-all duration-300 text-gray-300 hover:text-emerald-400"
+                  >
+                    {t(`nav.${slug}`)}
+                  </Link>
+                );
+              }
+              return (
+                <motion.a
+                  key={item}
+                  href={`#${slug}`}
+                  onClick={closeMenu}
+                  className={`font-medium transition-all duration-300 ${
+                    isSectionActive ? 'text-emerald-400 font-bold' : 'text-gray-300 hover:text-emerald-400'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {t(`nav.${slug}`)}
+                </motion.a>
+              );
+            })}
             <span className="text-gray-600 mx-2">|</span>
             <div className="relative">
               <motion.button
@@ -163,21 +231,60 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
           className="md:hidden bg-gray-900 border-t border-gray-800"
         >
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navItems.map((item) => (
-              <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                onClick={closeMenu}
-                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                  activeSection === item.toLowerCase()
+            {navItems.map((item) => {
+              const isForGeeks = item === 'For Geeks';
+              const slug = isForGeeks ? 'forgeeks' : item.toLowerCase();
+              const isForGeeksActive = pathname === '/forgeeks';
+              const isSectionActive = pathname === '/' && activeSection === slug;
+              const linkClass = `block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                isForGeeks
+                  ? isForGeeksActive
+                    ? 'bg-orange-900/50'
+                    : 'hover:bg-gray-800'
+                  : isSectionActive
                     ? 'bg-emerald-900/50 text-emerald-400'
                     : 'text-gray-300 hover:bg-gray-800'
-                }`}
-                whileTap={{ scale: 0.98 }}
-              >
-                {t(`nav.${item.toLowerCase()}`)}
-              </motion.a>
-            ))}
+              }`;
+              const content = isForGeeks ? (
+                <span className="relative inline-block">
+                  <motion.span
+                    className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 bg-[length:200%_auto]"
+                    style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+                    animate={{ backgroundPosition: ['200% 50%', '-100% 50%'] }}
+                    transition={{ backgroundPosition: { duration: 2.5, repeat: Infinity, ease: 'linear' } }}
+                  >
+                    {t('nav.forGeeks')} ✨
+                  </motion.span>
+                </span>
+              ) : (
+                t(`nav.${slug}`)
+              );
+              if (isForGeeks) {
+                return (
+                  <Link key={item} to="/forgeeks" onClick={closeMenu} className={linkClass}>
+                    {content}
+                  </Link>
+                );
+              }
+              if (pathname === '/forgeeks') {
+                return (
+                  <Link key={item} to="/" onClick={closeMenu} className={linkClass}>
+                    {content}
+                  </Link>
+                );
+              }
+              return (
+                <motion.a
+                  key={item}
+                  href={`#${slug}`}
+                  onClick={closeMenu}
+                  className={linkClass}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {content}
+                </motion.a>
+              );
+            })}
             <div className="border-t border-gray-700 mt-2 pt-2">
               <div className="px-3 py-2 text-gray-400 text-sm font-medium mb-1">Language</div>
               {languages.map((lang) => (

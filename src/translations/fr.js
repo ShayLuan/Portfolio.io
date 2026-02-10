@@ -1,5 +1,6 @@
 export const fr = {
   nav: {
+    forGeeks: 'Pour les geeks',
     about: 'À propos',
     projects: 'Projets',
     skills: 'Compétences',

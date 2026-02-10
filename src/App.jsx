@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
@@ -8,24 +9,12 @@ import Skills from './components/Skills';
 import CommunicationLanguages from './components/CommunicationLanguages';
 import Connect from './components/Connect';
 import Footer from './components/Footer';
+import ForGeeksPage from './components/ForGeeksPage';
 import './index.css';
 
-function AppContent({ isMenuOpen, setIsMenuOpen, activeSection, setActiveSection, closeMenu }) {
-  const { language } = useLanguage();
-  
-  // Update HTML data attribute for font styling
-  useEffect(() => {
-    document.documentElement.setAttribute('data-lang', language);
-  }, [language]);
-
+function HomePage() {
   return (
-    <div className="text-gray-100 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
-      <Navigation 
-        isMenuOpen={isMenuOpen}
-        setIsMenuOpen={setIsMenuOpen}
-        activeSection={activeSection}
-        closeMenu={closeMenu}
-      />
+    <>
       <Hero />
       <About />
       <Projects />
@@ -33,47 +22,65 @@ function AppContent({ isMenuOpen, setIsMenuOpen, activeSection, setActiveSection
       <CommunicationLanguages />
       <Connect />
       <Footer />
-    </div>
+    </>
   );
 }
 
-export default function App() {
+function Layout() {
+  const { language } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-  
-  // Close mobile menu when clicking a link
+  const pathname = useLocation().pathname;
   const closeMenu = () => setIsMenuOpen(false);
-  
-  // Handle scroll spy for active section highlighting
+
   useEffect(() => {
+    document.documentElement.setAttribute('data-lang', language);
+  }, [language]);
+
+  useEffect(() => {
+    if (pathname !== '/') return;
     const handleScroll = () => {
       const sections = ['hero', 'about', 'projects', 'skills', 'connect'];
       const scrollPosition = window.scrollY + 100;
-      
+
       for (const section of sections) {
         const element = document.getElementById(section);
-        if (element && scrollPosition >= element.offsetTop && 
+        if (element && scrollPosition >= element.offsetTop &&
             scrollPosition < element.offsetTop + element.offsetHeight) {
           setActiveSection(section);
           break;
         }
       }
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]);
 
   return (
-    <LanguageProvider>
-      <AppContent 
+    <div className="text-gray-100 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
+      <Navigation
         isMenuOpen={isMenuOpen}
         setIsMenuOpen={setIsMenuOpen}
         activeSection={activeSection}
-        setActiveSection={setActiveSection}
         closeMenu={closeMenu}
       />
-    </LanguageProvider>
+      <Outlet />
+    </div>
   );
 }
 
+export default function App() {
+  return (
+    <LanguageProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route path="forgeeks" element={<ForGeeksPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </LanguageProvider>
+  );
+}
