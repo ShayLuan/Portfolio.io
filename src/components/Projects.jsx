@@ -5,6 +5,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { getTranslation } from '../translations';
 
 const GAP_PX = 40; // gap-10 = 2.5rem
+const CARD_SIZE_FACTOR = 1 / 1.05; // smaller slots so hover doesn't overflow
 
 export default function Projects() {
   const { language } = useLanguage();
@@ -36,6 +37,9 @@ export default function Projects() {
   const prevCards = () => {
     setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   };
+
+  const cardWidthPx = slideStepPx > 0 ? (slideStepPx - GAP_PX) * CARD_SIZE_FACTOR : 280 * CARD_SIZE_FACTOR;
+  const stepDistancePx = cardWidthPx + GAP_PX;
 
   return (
     <section id="projects" className="py-20 bg-gray-900">
@@ -72,25 +76,25 @@ export default function Projects() {
             <motion.div
               className="flex flex-row gap-10"
               style={{
-                width: slideStepPx > 0
-                  ? projects.length * (slideStepPx - GAP_PX) + (projects.length - 1) * GAP_PX
-                  : projects.length * 280 + (projects.length - 1) * GAP_PX,
+                width: projects.length * cardWidthPx + (projects.length - 1) * GAP_PX,
               }}
-              animate={{ x: -currentIndex * slideStepPx }}
+              animate={{ x: -currentIndex * stepDistancePx }}
               transition={{ type: 'tween', ease: 'easeInOut', duration: 0.5 }}
             >
               {projects.map((project) => (
                 <motion.div
                   key={project.id}
                   style={{
-                    flex: `0 0 ${slideStepPx > 0 ? slideStepPx - GAP_PX : 280}px`,
+                    flex: `0 0 ${cardWidthPx}px`,
                     minWidth: 0,
                   }}
+                  initial={{ scale: 0.9 }}
+                  animate={{ scale: 0.9 }}
                   onHoverStart={() => setHoveredId(project.id)}
                   onHoverEnd={() => setHoveredId(null)}
                   whileHover={{
-                    scale: 1.05,
-                    y: -10,
+                    scale: 0.9,
+                    y: -9,
                     boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
                     transition: { duration: 0.3, ease: 'easeOut' },
                   }}
