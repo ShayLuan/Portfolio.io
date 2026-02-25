@@ -30,6 +30,22 @@ export const projects = [
     image: "/Jester.PNG",
     tech: ["Python", "DeepSeek API", "Railway", "Discord.py"],
     github: "https://github.com/ShayLuan/Jester.bot"
+  },
+  {
+    id: 5,
+    title: "Portfolio.io",
+    description: "Obviously, this. Personal Portfolio. Made with React and Tailwind CSS. Will gradually modify as my aesthetic taste refines.",
+    image: "/Portfolio.io.png",
+    tech: ["React", "Tailwind CSS", "JavaScript", "Node.js/Express", "Vite"],
+    github: "https://github.com/ShayLuan/Portfolio.io"
+  },
+  {
+    id: 6,
+    title: "Poppy",
+    description: "Can't afford Tony Stark's Jarvis, so Poppy will have to do for now. Voice-activated System Control application. Leveraging PyAudio and HMM before training with neural networks.",
+    image: "/Poppy.webp",
+    tech: ["Python", "Vosk", "PyAudio", "Windows OS Audio API"],
+    github: "https://github.com/ShayLuan/Poppy"
   }
 ];
 
