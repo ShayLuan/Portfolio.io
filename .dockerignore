@@ -1,0 +1,32 @@
+# Dependencies (reinstalled in container)
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output (rebuilt in container)
+dist
+
+# Git
+.git
+.gitignore
+
+# IDE and OS
+.cursor
+.vscode
+.idea
+.DS_Store
+*.log
+
+# Env files (use Railway env vars instead)
+.env
+.env.*
+!.env.example
+
+# Optional: tests and docs (not needed for deploy)
+**/__tests__
+**/*.test.*
+**/*.spec.*
+README.md
+*.md
