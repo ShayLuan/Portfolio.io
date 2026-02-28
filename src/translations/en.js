@@ -67,6 +67,18 @@ export const en = {
     healthcareResearch: "Healthcare Research",
     aiMlLlmDevelopment: "AI/ML/LLM Development"
   },
+  reviews: {
+    title: 'Reviews',
+    formTitle: 'Leave a review',
+    nameLabel: 'Name',
+    ratingLabel: 'Rating',
+    reviewLabel: 'Your review',
+    charCount: '{count} / {max}',
+    submit: 'Submit',
+    placeholderName: 'Your name',
+    placeholderReview: 'Write your review here (max 300 characters)',
+    noReviews: 'No reviews yet. Be the first!'
+  },
   connect: {
     title: "Let's Connect",
     description: "I'm always excited to collaborate on interesting projects or discuss new technologies. Feel free to reach out!",

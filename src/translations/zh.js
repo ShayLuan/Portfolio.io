@@ -67,6 +67,18 @@ export const zh = {
     healthcareResearch: "医疗健康研究",
     aiMlLlmDevelopment: "AI/ML/LLM开发"
   },
+  reviews: {
+    title: '评价',
+    formTitle: '留下评价',
+    nameLabel: '姓名',
+    ratingLabel: '评分',
+    reviewLabel: '您的评价',
+    charCount: '{count} / {max}',
+    submit: '提交',
+    placeholderName: '您的姓名',
+    placeholderReview: '在此写下您的评价（最多300字）',
+    noReviews: '暂无评价。快来抢沙发！'
+  },
   connect: {
     title: "联系我",
     description: "我总是很兴奋能与有趣的项目合作或讨论新技术。欢迎随时联系我！",

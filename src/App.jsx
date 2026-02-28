@@ -7,6 +7,7 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
 import CommunicationLanguages from './components/CommunicationLanguages';
+import Reviews from './components/Reviews';
 import Connect from './components/Connect';
 import Footer from './components/Footer';
 import ForGeeksPage from './components/ForGeeksPage';
@@ -20,6 +21,7 @@ function HomePage() {
       <Projects />
       <Skills />
       <CommunicationLanguages />
+      <Reviews />
       <Connect />
       <Footer />
     </>
