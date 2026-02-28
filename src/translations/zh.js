@@ -77,7 +77,8 @@ export const zh = {
     submit: '提交',
     placeholderName: '您的姓名',
     placeholderReview: '在此写下您的评价（最多300字）',
-    noReviews: '暂无评价。快来抢沙发！'
+    noReviews: '暂无评价。快来抢沙发！',
+    submitError: '提交失败，请重试。'
   },
   connect: {
     title: "联系我",

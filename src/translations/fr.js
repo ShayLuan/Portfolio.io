@@ -77,7 +77,8 @@ export const fr = {
     submit: 'Envoyer',
     placeholderName: 'Votre nom',
     placeholderReview: 'Écrivez votre avis ici (max 300 caractères)',
-    noReviews: 'Pas encore d\'avis. Soyez le premier !'
+    noReviews: 'Pas encore d\'avis. Soyez le premier !',
+    submitError: 'Échec de l\'envoi. Réessayez.'
   },
   connect: {
     title: "Restons en contact",

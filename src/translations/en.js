@@ -77,7 +77,8 @@ export const en = {
     submit: 'Submit',
     placeholderName: 'Your name',
     placeholderReview: 'Write your review here (max 300 characters)',
-    noReviews: 'No reviews yet. Be the first!'
+    noReviews: 'No reviews yet. Be the first!',
+    submitError: 'Failed to submit. Try again.'
   },
   connect: {
     title: "Let's Connect",

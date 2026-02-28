@@ -4,7 +4,6 @@ import { useLanguage } from '../context/LanguageContext';
 import { getTranslation } from '../translations';
 import { seedReviews } from '../data/reviews';
 
-const STORAGE_KEY = 'portfolio-reviews';
 const MAX_CHARS = 300;
 
 function StarRating({ value, onChange, readOnly }) {
@@ -48,45 +47,45 @@ export default function Reviews() {
   const { language } = useLanguage();
   const t = (key) => getTranslation(language, key);
 
-  const [reviews, setReviews] = useState(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        return Array.isArray(parsed) && parsed.length > 0 ? parsed : seedReviews;
-      }
-    } catch (_) {}
-    return seedReviews;
-  });
-
+  const [reviews, setReviews] = useState(seedReviews);
   const [name, setName] = useState('');
   const [rating, setRating] = useState(0);
   const [text, setText] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [submitError, setSubmitError] = useState(null);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
-    } catch (_) {}
-  }, [reviews]);
+    fetch('/api/reviews')
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) setReviews(data);
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitError(null);
     const trimmedName = name.trim();
     const trimmedText = text.trim();
     if (!trimmedName || !trimmedText || trimmedText.length > MAX_CHARS) return;
     if (rating < 1 || rating > 5) return;
-    setReviews((prev) => [
-      ...prev,
-      {
-        id: crypto.randomUUID?.() ?? `rev-${Date.now()}`,
-        name: trimmedName,
-        rating,
-        text: trimmedText
-      }
-    ]);
-    setName('');
-    setRating(0);
-    setText('');
+    try {
+      const res = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: trimmedName, rating, text: trimmedText }),
+      });
+      if (!res.ok) throw new Error('Failed to submit');
+      const review = await res.json();
+      setReviews((prev) => [review, ...prev]);
+      setName('');
+      setRating(0);
+      setText('');
+    } catch {
+      setSubmitError(true);
+    }
   };
 
   const charCount = text.length;
@@ -152,6 +151,9 @@ export default function Reviews() {
                     {t('reviews.charCount').replace('{count}', charCount).replace('{max}', MAX_CHARS)}
                   </p>
                 </div>
+                {submitError && (
+                  <p className="text-sm text-red-400">{t('reviews.submitError') || 'Failed to submit. Try again.'}</p>
+                )}
                 <button
                   type="submit"
                   disabled={!name.trim() || !text.trim() || rating < 1 || text.length > MAX_CHARS}
@@ -165,7 +167,11 @@ export default function Reviews() {
 
           {/* Carousel area (right) */}
           <div className="flex-1 min-w-0 overflow-hidden">
-            {reviews.length === 0 ? (
+            {loading ? (
+              <div className="flex items-center justify-center h-48 text-gray-500">
+                ...
+              </div>
+            ) : reviews.length === 0 ? (
               <div className="flex items-center justify-center h-48 text-gray-500">
                 {t('reviews.noReviews')}
               </div>
