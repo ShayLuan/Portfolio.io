@@ -67,6 +67,19 @@ export const fr = {
     healthcareResearch: "Recherche en Santé",
     aiMlLlmDevelopment: "Développement IA/ML/LLM"
   },
+  reviews: {
+    title: 'Avis',
+    formTitle: 'Laisser un avis',
+    nameLabel: 'Nom',
+    ratingLabel: 'Note',
+    reviewLabel: 'Votre avis',
+    charCount: '{count} / {max}',
+    submit: 'Envoyer',
+    placeholderName: 'Votre nom',
+    placeholderReview: 'Écrivez votre avis ici (max 300 caractères)',
+    noReviews: 'Pas encore d\'avis. Soyez le premier !',
+    submitError: 'Échec de l\'envoi. Réessayez.'
+  },
   connect: {
     title: "Restons en contact",
     description: "Je suis toujours ravi de collaborer sur des projets intéressants ou de discuter de nouvelles technologies. N'hésitez pas à me contacter !",
