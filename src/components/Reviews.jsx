@@ -29,7 +29,7 @@ function StarRating({ value, onChange, readOnly }) {
 function ReviewCard({ review }) {
   const initial = review.name.charAt(0).toUpperCase();
   return (
-    <div className="flex-shrink-0 w-[280px] bg-gray-800 border border-gray-700 rounded-xl p-4 shadow-md">
+    <div className="flex-shrink-0 w-[280px] min-h-[220px] bg-gray-800 border border-gray-700 rounded-xl p-4 shadow-md">
       <div className="flex items-center gap-3 mb-2">
         <div className="w-10 h-10 rounded-full bg-emerald-600/50 flex items-center justify-center text-emerald-300 font-bold">
           {initial}
@@ -104,7 +104,7 @@ export default function Reviews() {
           {t('reviews.title')}
         </motion.h2>
 
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-6 items-stretch">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-6 items-center">
           {/* Static form card (left) */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -112,7 +112,7 @@ export default function Reviews() {
             viewport={{ once: true }}
             className="flex-shrink-0 w-full lg:w-80 lg:min-w-[320px]"
           >
-            <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-lg h-full">
+            <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-lg">
               <h3 className="text-lg font-bold text-gray-100 mb-4">{t('reviews.formTitle')}</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
