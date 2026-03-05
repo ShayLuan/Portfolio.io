@@ -64,3 +64,4 @@ Detail-oriented Computer Science student with hands-on web development experienc
 ## Optional (when asked)
 - **Availability:** Internship target summer/autumn 2026; 4–8 months.
 - **Background:** Career change from nursing to CS; brings teamwork and communication from healthcare.
+- **Visas:** Will get work visa for US or EU if needed.

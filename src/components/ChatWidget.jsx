@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const WELCOME_MESSAGE = "Hi! I'm the portfolio assistant. Ask me anything about the work and experience here—or suggest an interview time. (Real AI replies coming in Phase 4.)";
+const WELCOME_MESSAGE = "Bonjour/Hi/你好! I'm Shay's portfolio assistant, Pomelo. Ask me anything about their work and experience—or suggest an interview time.";
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
@@ -8,19 +8,41 @@ export default function ChatWidget() {
     { role: 'assistant', content: WELCOME_MESSAGE },
   ]);
   const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSend = (e) => {
+  const handleSend = async (e) => {
     e.preventDefault();
     const trimmed = input.trim();
-    if (!trimmed) return;
+    if (!trimmed || loading) return;
 
     setInput('');
-    // Phase 2: no API yet — add user message + placeholder reply in one update
-    setMessages((prev) => [
-      ...prev,
-      { role: 'user', content: trimmed },
-      { role: 'assistant', content: "Got it! (Chat API will replace this in Phase 4.)" },
-    ]);
+    setError(null);
+    const newMessages = [...messages, { role: 'user', content: trimmed }];
+    setMessages(newMessages);
+    setLoading(true);
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: newMessages }),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setMessages((prev) => [...prev, { role: 'assistant', content: data.error || 'Something went wrong.' }]);
+        setError(data.error || 'Request failed.');
+        return;
+      }
+
+      setMessages((prev) => [...prev, { role: 'assistant', content: data.content || '' }]);
+    } catch (err) {
+      setError(err.message || 'Network error.');
+      setMessages((prev) => [...prev, { role: 'assistant', content: "Couldn't reach the server. Try again." }]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -55,6 +77,9 @@ export default function ChatWidget() {
 
           {/* Scrollable message list */}
           <div className="flex-1 overflow-y-auto p-3 space-y-3">
+            {error && (
+              <p className="text-xs text-red-400 px-1">{error}</p>
+            )}
             {messages.map((msg, i) => (
               <div
                 key={i}
@@ -77,14 +102,16 @@ export default function ChatWidget() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type a message..."
-                className="flex-1 rounded-lg border border-gray-600 bg-gray-700 px-3 py-2 text-sm text-gray-100 placeholder-gray-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                disabled={loading}
+                className="flex-1 rounded-lg border border-gray-600 bg-gray-700 px-3 py-2 text-sm text-gray-100 placeholder-gray-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 disabled:opacity-60"
                 maxLength={2000}
               />
               <button
                 type="submit"
-                className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-gray-800 disabled:opacity-50"
+                disabled={loading}
+                className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Send
+                {loading ? '…' : 'Send'}
               </button>
             </div>
           </form>

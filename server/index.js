@@ -22,6 +22,7 @@ dotenv.config({ path: '.env' });
 
 import express from 'express';
 import { getSystemPrompt } from './prompt.js';
+import { registerChatRoutes } from './chat.js';
 
 const app = express();
 
@@ -33,6 +34,9 @@ const PORT = process.env.PORT ?? 3000;
 // Parse JSON request bodies. Needed when we add POST /api/chat (Phase 4).
 // Without this, req.body would be undefined for JSON payloads.
 app.use(express.json());
+
+// --- API routes (must be before static and SPA fallback so /api/* is handled here) ---
+registerChatRoutes(app);
 
 // --- Static files (your built React app) ---
 
