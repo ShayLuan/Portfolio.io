@@ -14,7 +14,8 @@ function getAnthropic() {
   return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 }
 
-const MODEL = 'claude-3-5-sonnet-latest';
+// Current model ID from https://docs.anthropic.com/en/docs/about-claude/models
+const MODEL = 'claude-sonnet-4-6';
 const MAX_TOKENS = 1024;
 
 /**
