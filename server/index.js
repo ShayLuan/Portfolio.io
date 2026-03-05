@@ -5,8 +5,6 @@
  * 1. Serves your built React app (static files from dist/)
  * 2. Will later serve API routes (e.g. /api/chat) from this same process
  *
- * Why one process? On Railway you have one "service"; it runs one start command.
- * So the same server that hosts the site also handles API requests.
  */
 
 import path from 'path';
@@ -23,6 +21,7 @@ dotenv.config({ path: '.env.local' });
 dotenv.config({ path: '.env' });
 
 import express from 'express';
+import { getSystemPrompt } from './prompt.js';
 
 const app = express();
 
@@ -53,6 +52,10 @@ app.get('*', (_req, res) => {
 });
 
 // --- Start the server ---
+
+// Phase 3: Load context at startup so we know the file is there. Chat (Phase 4) will call getSystemPrompt().
+getSystemPrompt();
+console.log('Context loaded (content/agent-context.md).');
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
