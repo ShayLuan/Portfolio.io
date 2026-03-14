@@ -20,10 +20,10 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
   
   const navItems = ['For Geeks', 'About', 'Projects', 'Skills', 'Connect'];
   return (
-    <nav className="fixed w-full bg-gray-900/90 backdrop-blur-sm z-50 shadow-sm border-b border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="fixed top-0 left-0 w-full max-w-[100vw] overflow-x-hidden bg-gray-900/90 backdrop-blur-sm z-50 shadow-sm border-b border-gray-800">
+      <div className="w-full min-w-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="min-w-0 shrink flex items-center space-x-2">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -33,7 +33,7 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
               SL
             </motion.div>
             <span
-              className="font-bold text-xl"
+              className="font-bold text-xl truncate overflow-hidden"
               style={{
                 WebkitTextStroke: '1px rgba(16, 185, 129, 0.8)',
                 textStroke: '1px rgba(16, 185, 129, 0.8)',
@@ -195,7 +195,7 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
           </div>
           
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex flex-shrink-0 items-center">
             <motion.button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-300 focus:outline-none"
@@ -221,16 +221,16 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
         </div>
       </div>
       
-      {/* Mobile Menu */}
+      {/* Mobile Menu - full width on mobile, same as main page */}
       {isMenuOpen && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
           transition={{ duration: 0.3 }}
-          className="md:hidden bg-gray-900 border-t border-gray-800"
+          className="md:hidden w-full min-w-full max-w-[100vw] box-border bg-gray-900 border-t border-gray-800"
         >
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <div className="px-4 pt-2 pb-3 space-y-1 sm:px-6">
             {navItems.map((item) => {
               const isForGeeks = item === 'For Geeks';
               const slug = isForGeeks ? 'forgeeks' : item.toLowerCase();
