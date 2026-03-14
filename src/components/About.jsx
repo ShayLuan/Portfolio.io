@@ -55,7 +55,7 @@ export default function About() {
               </div>
               
               {/* Decorative badge */}
-              <div className="absolute -bottom-6 -right-6 bg-gray-800 p-4 rounded-xl shadow-lg border border-gray-700 max-w-xs">
+              <div className="absolute -bottom-6 -right-6 bg-gray-800 p-4 rounded-xl shadow-lg border border-gray-700 max-w-[85vw] md:max-w-xs">
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 flex flex-col items-center justify-center text-white font-bold text-sm leading-none gap-0.5">

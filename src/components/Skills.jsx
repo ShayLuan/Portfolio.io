@@ -52,7 +52,7 @@ export default function Skills() {
           <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-400" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('skills.title')}</h2>
           
           {/* Tabs */}
-          <div className="flex justify-center gap-4 mt-8">
+          <div className="flex flex-wrap justify-center gap-2 md:gap-4 mt-8">
             <motion.button
               onClick={() => setActiveTab('technical')}
               className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
