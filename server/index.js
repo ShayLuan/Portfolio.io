@@ -23,6 +23,8 @@ dotenv.config({ path: '.env' });
 import express from 'express';
 import { getSystemPrompt } from './prompt.js';
 import { registerChatRoutes } from './chat.js';
+import { registerAuthRoutes } from './auth.js';
+import { registerCalendarRoutes } from './calendar.js';
 
 const app = express();
 
@@ -36,9 +38,11 @@ const PORT = process.env.PORT ?? 3000;
 app.use(express.json());
 
 // --- API routes (must be before static and SPA fallback so /api/* is handled here) ---
+registerAuthRoutes(app);
+registerCalendarRoutes(app);
 registerChatRoutes(app);
 
-// --- Static files (your built React app) ---
+// --- Static files (the builtReact app) ---
 
 // express.static serves files from a folder. Requests like GET /assets/index-xxx.js
 // or GET /Portfolio.io.png are served from the dist/ folder.
