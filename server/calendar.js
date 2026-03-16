@@ -53,6 +53,95 @@ export async function listEvents(timeMin, timeMax, maxResults = 10) {
 }
 
 /**
+ * Find free slots between timeMin and timeMax that are at least durationMinutes long.
+ * Returns { slots, error }, where slots is an array of { start, end } ISO strings.
+ */
+export async function findFreeSlots(timeMin, timeMax, durationMinutes = 30, maxSlots = 5) {
+  const { events, error } = await listEvents(timeMin, timeMax, 100);
+  if (error) return { slots: [], error };
+
+  const start = new Date(timeMin);
+  const end = new Date(timeMax);
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end <= start) {
+    return { slots: [], error: 'Invalid time range.' };
+  }
+
+  const busy = events
+    .map((e) => {
+      const s = new Date(e.start?.dateTime || e.start?.date || '');
+      const eTime = new Date(e.end?.dateTime || e.end?.date || '');
+      return { start: s, end: eTime };
+    })
+    .filter((b) => !Number.isNaN(b.start.getTime()) && !Number.isNaN(b.end.getTime()))
+    .sort((a, b) => a.start - b.start);
+
+  const slots = [];
+  const minMs = durationMinutes * 60 * 1000;
+
+  let cursor = new Date(start);
+  for (const block of busy) {
+    if (block.end <= cursor) continue;
+    if (block.start > cursor && block.start - cursor >= minMs) {
+      slots.push({
+        start: cursor.toISOString(),
+        end: new Date(cursor.getTime() + minMs).toISOString(),
+      });
+      if (slots.length >= maxSlots) return { slots, error: null };
+    }
+    if (block.end > cursor) {
+      cursor = new Date(block.end);
+      if (cursor >= end) break;
+    }
+  }
+
+  if (end - cursor >= minMs && slots.length < maxSlots) {
+    slots.push({
+      start: cursor.toISOString(),
+      end: new Date(cursor.getTime() + minMs).toISOString(),
+    });
+  }
+
+  return { slots: slots.slice(0, maxSlots), error: null };
+}
+
+/**
+ * Create a calendar event on the primary calendar. Returns { event, error } where
+ * event contains summary, start, end, and htmlLink when available.
+ */
+export async function createCalendarEvent({ start, end, summary, attendeeEmail }) {
+  const calendar = getCalendarClient();
+  if (!calendar) {
+    return { event: null, error: 'Calendar not connected (missing credentials).' };
+  }
+
+  try {
+    const { data } = await calendar.events.insert({
+      calendarId: 'primary',
+      requestBody: {
+        summary: summary || 'Interview',
+        start: { dateTime: start },
+        end: { dateTime: end },
+        attendees: attendeeEmail ? [{ email: attendeeEmail }] : [],
+      },
+      sendUpdates: 'all',
+    });
+
+    return {
+      event: {
+        id: data.id,
+        summary: data.summary,
+        start: data.start?.dateTime || data.start?.date,
+        end: data.end?.dateTime || data.end?.date,
+        htmlLink: data.htmlLink,
+      },
+      error: null,
+    };
+  } catch (err) {
+    return { event: null, error: err.message || 'Failed to create event.' };
+  }
+}
+
+/**
  * Register calendar API routes (e.g. status) on the Express app.
  */
 export function registerCalendarRoutes(app) {
@@ -88,5 +177,18 @@ export function registerCalendarRoutes(app) {
       message: 'Calendar connected. Backend can read your calendar.',
       nextEvents: summary,
     });
+  });
+
+  // Simple debug endpoint: show a few free 30-minute slots in the next 7 days.
+  app.get('/api/calendar/free-slots', async (_req, res) => {
+    const now = new Date();
+    const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+    const { slots, error } = await findFreeSlots(now.toISOString(), nextWeek.toISOString(), 30, 5);
+
+    if (error) {
+      return res.status(500).json({ slots: [], error });
+    }
+
+    res.json({ slots });
   });
 }
