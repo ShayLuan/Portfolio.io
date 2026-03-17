@@ -11,6 +11,7 @@ import Reviews from './components/Reviews';
 import Connect from './components/Connect';
 import Footer from './components/Footer';
 import ForGeeksPage from './components/ForGeeksPage';
+import ChatWidget from './components/ChatWidget';
 import './index.css';
 
 function HomePage() {
@@ -68,6 +69,7 @@ function Layout() {
         closeMenu={closeMenu}
       />
       <Outlet />
+      <ChatWidget />
     </div>
   );
 }
