@@ -9,13 +9,13 @@ export const fr = {
   hero: {
     greeting: "Salut, je suis",
     name: "Shay Luan",
-    description: "Étudiant en deuxième année d'informatique passionné par la création d'applications pratiques",
+    description: "Étudiant en troisième année d'informatique passionné par la création d'applications pratiques",
     viewProjects: "Voir mes projets",
     connect: "Contactez-moi"
   },
   about: {
     title: "À propos de moi",
-    paragraph1: "Je suis un étudiant en deuxième année d'informatique à l'Université Concordia avec une passion pour créer des applications pratiques. Elles peuvent être basées sur le web, embarquées ou automatisées... essentiellement tout ce qui peut être fait avec un ordinateur, tant qu'elles servent un objectif.",
+    paragraph1: "Je suis un étudiant en troisième année d'informatique à l'Université Concordia avec une passion pour créer des applications pratiques. Elles peuvent être basées sur le web, embarquées ou automatisées... essentiellement tout ce qui peut être fait avec un ordinateur, tant qu'elles servent un objectif.",
     paragraph2: "Quand je ne code pas, vous pouvez me trouver en train de préparer de délicieux repas (soyons honnêtes, c'est juste la version organique du codage), participant à des hackathons ou explorant de nouvelles technologies. Je suis aussi un lecteur assidu, et n'oublions pas le passe-temps le plus dominant du siècle : le gaming !",
     paragraph3: "Je me concentre actuellement sur le développement backend avec C++ et j'élargis mes connaissances frontend avec React.",
     badges: {
@@ -25,7 +25,7 @@ export const fr = {
     },
     degree: "Informatique",
     university: "Université Concordia",
-    year: "2e",
+    year: "3e",
     yearLabel: "Année"
   },
   projects: {
@@ -91,7 +91,7 @@ export const fr = {
     andCollaborative: "et aux projets collaboratifs !"
   },
   footer: {
-    description: "Étudiant en deuxième année d'informatique créant des applications pratiques et apprenant les technologies web modernes.",
+    description: "Étudiant en troisième année d'informatique créant des applications pratiques et apprenant les technologies web modernes.",
     quickLinks: "Liens rapides",
     connectWithMe: "Restez en contact",
     allRightsReserved: "Tous droits réservés.",

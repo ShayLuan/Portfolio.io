@@ -9,13 +9,13 @@ export const zh = {
   hero: {
     greeting: "你好，我是",
     name: "Shay Luan",
-    description: "热衷于构建实用应用程序的二年级计算机科学学生",
+    description: "热衷于构建实用应用程序的三年级计算机科学学生",
     viewProjects: "查看我的项目",
     connect: "与我联系"
   },
   about: {
     title: "关于我",
-    paragraph1: "我是康考迪亚大学计算机科学专业的大二学生，超爱捣鼓各种实用的小应用——网页的、嵌入式的、自动化的……反正只要是能用代码解决实际问题的事儿，我都想试试！",
+    paragraph1: "我是康考迪亚大学计算机科学专业的大三学生，超爱捣鼓各种实用的小应用——网页的、嵌入式的、自动化的……反正只要是能用代码解决实际问题的事儿，我都想试试！",
     paragraph2: "不写代码的时候，我一般在厨房里折腾好吃的（说白了就是给食材写“有机代码”🍳），冲黑客马拉松，或者瞎折腾些新奇的技术。平时也超爱看书，当然啦，作为21世纪标准男孩，打游戏也是日常必备项目🎮",
     paragraph3: "最近主攻C++做后端开发，同时也在玩转React，想把前端技能也拉满～✨",
     badges: {
@@ -25,7 +25,7 @@ export const zh = {
     },
     degree: "计算机科学",
     university: "康考迪亚大学",
-    year: "第二",
+    year: "第三",
     yearLabel: "年"
   },
   projects: {
@@ -91,7 +91,7 @@ export const zh = {
     andCollaborative: "的实习机会和合作项目！"
   },
   footer: {
-    description: "二年级计算机科学学生，构建实用应用程序并学习现代网络技术。",
+    description: "三年级计算机科学学生，构建实用应用程序并学习现代网络技术。",
     quickLinks: "快速链接",
     connectWithMe: "与我联系",
     allRightsReserved: "版权所有。",

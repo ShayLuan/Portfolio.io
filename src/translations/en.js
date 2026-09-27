@@ -9,13 +9,13 @@ export const en = {
   hero: {
     greeting: "Hi, I'm",
     name: "Shay Luan",
-    description: "Second-year Computer Science student passionate about building practical applications",
+    description: "Third-year Computer Science student passionate about building practical applications",
     viewProjects: "View My Projects",
     connect: "Connect With Me"
   },
   about: {
     title: "About Me",
-    paragraph1: "I'm a second year Computer Science student at Concordia University with a passion for building practical applications. They can be web-based, embedded, or automated... basically anything that can be done with a computer, as long as they serve a purpose.",
+    paragraph1: "I'm a third year Computer Science student at Concordia University with a passion for building practical applications. They can be web-based, embedded, or automated... basically anything that can be done with a computer, as long as they serve a purpose.",
     paragraph2: "When I'm not coding, you can find me cooking up delicious meals (let's be honest, it's just the organic version of coding), participating in hackathons, or exploring new technologies. I'm also an avid reader, and let's not forget the most dominant hobby of the century: gaming!",
     paragraph3: "I'm currently focusing on backend development with C++ and expanding my frontend knowledge with React.",
     badges: {
@@ -25,7 +25,7 @@ export const en = {
     },
     degree: "Computer Science",
     university: "Concordia University",
-    year: "2nd",
+    year: "3rd",
     yearLabel: "Year"
   },
   projects: {
@@ -91,7 +91,7 @@ export const en = {
     andCollaborative: "and collaborative projects!"
   },
   footer: {
-    description: "Second-year CS student building practical applications and learning modern web technologies.",
+    description: "Third-year CS student building practical applications and learning modern web technologies.",
     quickLinks: "Quick Links",
     connectWithMe: "Connect With Me",
     allRightsReserved: "All rights reserved.",

@@ -20,7 +20,7 @@ export default function Navigation({ isMenuOpen, setIsMenuOpen, activeSection, c
   
   const navItems = ['For Geeks', 'About', 'Projects', 'Skills', 'Connect'];
   return (
-    <nav className="fixed top-0 left-0 w-full max-w-[100vw] overflow-x-hidden bg-gray-900/90 backdrop-blur-sm z-50 shadow-sm border-b border-gray-800">
+    <nav className="fixed top-0 left-0 w-full max-w-[100vw] overflow-x-clip overflow-y-visible bg-gray-900/90 backdrop-blur-sm z-50 shadow-sm border-b border-gray-800">
       <div className="w-full min-w-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <Link to="/" className="min-w-0 shrink flex items-center space-x-2">
